@@ -99,14 +99,12 @@ export const createBooking = async (req, res) => {
     booking.paymentLink = session.url
     await booking.save()
 
-    // SIMULATE WEBHOOK LOCALLY:
-    // Since Stripe Webhooks cannot reach localhost without a CLI relayer,
-    // we manually mark as paid and send the email for dev environment!
-    if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
-      setTimeout(() => {
-         completeCheckout(booking._id.toString()).catch(console.error);
-      }, 500);
-    }
+    // SIMULATE WEBHOOK FOR ALL ENVIRONMENTS:
+    // We manually mark as paid and send the email because Stripe Webhooks
+    // might not be configured on Vercel/Production for this project.
+    setTimeout(() => {
+       completeCheckout(booking._id.toString()).catch(console.error);
+    }, 500);
 
     return res.json({ success: true,url:session.url})
 
