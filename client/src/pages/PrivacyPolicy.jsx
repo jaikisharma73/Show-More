@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
           <p>
             At JackMov, we take your privacy seriously. This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a booking on our platform.
           </p>
-          
+
           <h2 className="text-2xl font-semibold text-white mt-8 mb-4">1. Information We Collect</h2>
           <p>
             When you visit JackMov, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device. Additionally, as you browse the platform, we collect information about the individual web pages or movies that you view.

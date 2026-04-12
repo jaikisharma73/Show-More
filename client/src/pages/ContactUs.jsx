@@ -21,7 +21,7 @@ const ContactUs = () => {
               </div>
               <div className="flex items-center gap-4">
                 <span className="font-semibold text-white">Address:</span>
-                <span>123 Movie Lane, Cinema City, CP 40001</span>
+                <span>Orion Mall, City Plaza ,Gorakhpur</span>
               </div>
             </div>
             <div className="bg-gray-800/50 backdrop-blur-md border border-gray-700 p-6 rounded-xl mt-8">
