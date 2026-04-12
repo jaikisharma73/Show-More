@@ -7,6 +7,9 @@ import SeatLayout from './pages/SeatLayout';
 import MyBookings from './pages/MyBookings';
 import Favorite from './pages/Favorite';
 import Home from './pages/Home';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import {Toaster} from 'react-hot-toast';
 import Footer from './components/Footer';
 import Layout from './pages/admin/Layout';
@@ -36,6 +39,9 @@ const App = () => {
 
 
       <Route path='/favorite' element={<Favorite/>} />
+      <Route path='/about-us' element={<AboutUs/>} />
+      <Route path='/contact-us' element={<ContactUs/>} />
+      <Route path='/privacy-policy' element={<PrivacyPolicy/>} />
 
       <Route path='/admin/*' element={user ? <Layout/>:(<div className='min-h-screen flex justify-center items-center'><SignIn fallbackRedirectUrl={'/admin'}/></div>)}>
 

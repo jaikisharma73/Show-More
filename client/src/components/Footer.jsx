@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { assets } from '../assets/assets';
 import BlurCircle from './BlurCircle';
 
@@ -21,10 +22,10 @@ const Footer = () => {
                     <div>
                         <h2 className="font-semibold mb-5">Company</h2>
                         <ul className="text-sm space-y-2">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About us</a></li>
-                            <li><a href="#">Contact us</a></li>
-                            <li><a href="#">Privacy policy</a></li>
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/about-us">About us</Link></li>
+                            <li><Link to="/contact-us">Contact us</Link></li>
+                            <li><Link to="/privacy-policy">Privacy policy</Link></li>
                         </ul>
                     </div>
                     <div>
