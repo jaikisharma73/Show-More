@@ -102,9 +102,11 @@ export const createBooking = async (req, res) => {
     // SIMULATE WEBHOOK FOR ALL ENVIRONMENTS:
     // We manually mark as paid and send the email because Stripe Webhooks
     // might not be configured on Vercel/Production for this project.
-    setTimeout(() => {
-       completeCheckout(booking._id.toString()).catch(console.error);
-    }, 500);
+    try {
+        await completeCheckout(booking._id.toString());
+    } catch (err) {
+        console.error("completeCheckout error:", err.message);
+    }
 
     return res.json({ success: true,url:session.url})
 
