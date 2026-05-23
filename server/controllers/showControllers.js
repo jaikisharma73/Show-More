@@ -1,11 +1,26 @@
 import axios from "axios";
+import https from "https";
 import Show from "../models/show.js";
 import Movie from "../models/movie.js";
+
+const httpsAgent = new https.Agent({ keepAlive: true });
+
+const fetchWithRetry = async (url, options, retries = 3) => {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await axios.get(url, { ...options, httpsAgent });
+    } catch (err) {
+      if (i === retries - 1 || !err.code || (err.code !== 'ECONNRESET' && err.code !== 'ETIMEDOUT')) throw err;
+      console.log(`TMDB fetch failed with ${err.code}. Retrying... (${i + 1}/${retries})`);
+      await new Promise(res => setTimeout(res, 1000)); // wait 1s before retry
+    }
+  }
+};
 
 // API to get now playing movies from TMDB API
 export const getNowPlayingMovies = async (req, res) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await fetchWithRetry(
       "https://api.themoviedb.org/3/movie/now_playing",
       {
         headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
@@ -22,7 +37,7 @@ export const getNowPlayingMovies = async (req, res) => {
 // API to get upcoming movies from TMDB API
 export const getUpcomingMovies = async (req, res) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await fetchWithRetry(
       "https://api.themoviedb.org/3/movie/upcoming",
       {
         headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
@@ -40,11 +55,11 @@ export const getUpcomingMovies = async (req, res) => {
 export const getTMDBMovieDetails = async (req, res) => {
   try {
     const { id } = req.params;
-    const movieDetailsResponse = await axios.get(`https://api.themoviedb.org/3/movie/${id}`, {
+    const movieDetailsResponse = await fetchWithRetry(`https://api.themoviedb.org/3/movie/${id}`, {
       headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
     });
     
-    const movieCreditsResponse = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits`, {
+    const movieCreditsResponse = await fetchWithRetry(`https://api.themoviedb.org/3/movie/${id}/credits`, {
       headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
     });
 
@@ -87,11 +102,11 @@ export const addShow = async (req, res) => {
     let movie = await Movie.findById(movieId);
 
     if (!movie) {
-      const movieDetailsResponse = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
+      const movieDetailsResponse = await fetchWithRetry(`https://api.themoviedb.org/3/movie/${movieId}`, {
         headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
       });
 
-      const movieCreditsResponse = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {
+      const movieCreditsResponse = await fetchWithRetry(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {
         headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
       });
 

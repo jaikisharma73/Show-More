@@ -20,7 +20,7 @@ const Movies = () => {
       <h1 className='text-lg font-medium my-4'>
         {searchQuery ? `Search Results for "${searchQuery}"` : 'Now Showing.'}
       </h1>
-      <div className='flex flex-wrap max-sm:justify-center gap-8'>
+      <div className='grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-4 sm:gap-8'>
         {filteredShows.map((movie)=>(
           <MovieCard movie = {movie} key={movie._id} />
         ))}

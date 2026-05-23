@@ -43,7 +43,7 @@ const Releases = () => {
 
       <h1 className='text-3xl font-bold my-8 text-white'>Upcoming Releases</h1>
 
-      <div className='flex flex-wrap max-sm:justify-center gap-8'>
+      <div className='grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-4 sm:gap-8'>
         {upcomingMovies.length > 0 ? upcomingMovies.map((movie) => (
           <div
             key={movie.id}
@@ -51,20 +51,20 @@ const Releases = () => {
               navigate(`/releases/${movie.id}`);
               scrollTo(0, 0);
             }}
-            className='cursor-pointer flex flex-col justify-between p-3 bg-gray-800 rounded-2xl hover:translate-y-1 transition duration-300 w-64'
+            className='cursor-pointer flex flex-col justify-between p-2 sm:p-3 bg-gray-800 rounded-2xl hover:translate-y-1 transition duration-300 w-full sm:w-64'
           >
             {movie.backdrop_path || movie.poster_path ? (
               <img
                 src={image_base_url + (movie.backdrop_path || movie.poster_path)}
                 alt={movie.title}
-                className='rounded-lg h-52 w-full object-cover object-center'
+                className='rounded-lg h-36 sm:h-52 w-full object-cover object-center'
               />
             ) : (
               <div className='rounded-lg h-52 w-full bg-gray-700 flex items-center justify-center text-gray-500'>
                 No Image
               </div>
             )}
-            <p className='font-semibold mt-2 truncate text-white'>{movie.title}</p>
+            <p className='font-semibold mt-2 truncate text-sm sm:text-base text-white'>{movie.title}</p>
             <p className='text-sm text-gray-400 mt-2'>
               {movie.release_date ? new Date(movie.release_date).toLocaleDateString() : "TBA"}
             </p>
