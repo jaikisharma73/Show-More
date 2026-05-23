@@ -7,6 +7,8 @@ import { useAppContext } from '../context/appContext.jsx';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { user } = useUser();
   const { openSignIn } = useClerk();
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ const Navbar = () => {
   return (
     <div className='fixed bg-transparent
   top-0 left-0 z-50 w-full flex items-center justify-between px-6 md:px-16 py-3'>
-      
+
       {/* Logo */}
       <Link to='/' className='flex-shrink-0'>
         <img src={assets.logo} className='w-40 max-w-full h-auto' />
@@ -30,8 +32,8 @@ const Navbar = () => {
 
         <Link onClick={() => { scrollTo(0, 0); setIsOpen(false); }} to='/'>Home</Link>
         <Link onClick={() => { scrollTo(0, 0); setIsOpen(false); }} to='/movies'>Movies</Link>
-        <Link onClick={() => { scrollTo(0, 0); setIsOpen(false); }} to='/'>Theaters</Link>
-        <Link onClick={() => { scrollTo(0, 0); setIsOpen(false); }} to='/'>Releases</Link>
+        <Link onClick={() => { scrollTo(0, 0); setIsOpen(false); }} to='/theaters'>Theaters</Link>
+        <Link onClick={() => { scrollTo(0, 0); setIsOpen(false); }} to='/releases'>Releases</Link>
         {favoriteMovies.length > 0 && (
           <Link onClick={() => { scrollTo(0, 0); setIsOpen(false); }} to='/favorite'>Favorites</Link>
         )}
@@ -39,7 +41,29 @@ const Navbar = () => {
 
       {/* Right Section: Search, Login/User, Menu */}
       <div className='flex items-center gap-4'>
-        <SearchIcon className='max-md:hidden w-6 h-6 cursor-pointer text-white' />
+        {isSearchOpen ? (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              navigate(`/movies?search=${searchQuery}`);
+              setIsSearchOpen(false);
+              setSearchQuery('');
+            }}
+            className='max-md:hidden flex items-center bg-white/10 rounded-full px-3 py-1 border border-gray-300/20'
+          >
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search movies..."
+              className="bg-transparent text-white outline-none w-32 md:w-48 text-sm"
+              autoFocus
+            />
+            <XIcon className="w-4 h-4 cursor-pointer text-white ml-2" onClick={() => setIsSearchOpen(false)} />
+          </form>
+        ) : (
+          <SearchIcon className='max-md:hidden w-6 h-6 cursor-pointer text-white' onClick={() => setIsSearchOpen(true)} />
+        )}
 
         {!user ? (
           <button

@@ -8,6 +8,9 @@ import MyBookings from './pages/MyBookings';
 import Favorite from './pages/Favorite';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
+import Theaters from './pages/Theaters';
+import Releases from './pages/Releases';
+import ReleaseDetails from './pages/ReleaseDetails';
 import ContactUs from './pages/ContactUs';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import {Toaster} from 'react-hot-toast';
@@ -35,6 +38,9 @@ const App = () => {
       <Route path='/movies/:id' element={<MovieDetails/>} />
       <Route path='/movies/:id/:date' element={<SeatLayout/>} />
       <Route path='/my-bookings' element={<MyBookings/>} />
+      <Route path='/theaters' element={<Theaters/>} />
+      <Route path='/releases' element={<Releases/>} />
+      <Route path='/releases/:id' element={<ReleaseDetails/>} />
       <Route path='/loading/:nextUrl' element={<Loading/>} />
 
 

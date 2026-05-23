@@ -19,6 +19,61 @@ export const getNowPlayingMovies = async (req, res) => {
   }
 };
 
+// API to get upcoming movies from TMDB API
+export const getUpcomingMovies = async (req, res) => {
+  try {
+    const { data } = await axios.get(
+      "https://api.themoviedb.org/3/movie/upcoming",
+      {
+        headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
+      }
+    );
+    const movies = data.results;
+    res.json({ success: true, movies });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// API to get TMDB movie details and cast by ID
+export const getTMDBMovieDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const movieDetailsResponse = await axios.get(`https://api.themoviedb.org/3/movie/${id}`, {
+      headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
+    });
+    
+    const movieCreditsResponse = await axios.get(`https://api.themoviedb.org/3/movie/${id}/credits`, {
+      headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
+    });
+
+    const movieApiData = movieDetailsResponse.data;
+    const movieCreditsData = movieCreditsResponse.data;
+
+    const movie = {
+      id: movieApiData.id,
+      title: movieApiData.title,
+      overview: movieApiData.overview,
+      poster_path: movieApiData.poster_path,
+      backdrop_path: movieApiData.backdrop_path,
+      genres: movieApiData.genres,
+      casts: movieCreditsData.cast,
+      release_date: movieApiData.release_date,
+      original_language: movieApiData.original_language,
+      tagline: movieApiData.tagline || " ",
+      vote_average: movieApiData.vote_average,
+      runtime: movieApiData.runtime,
+    };
+
+    res.json({ success: true, movie });
+  } catch (error) {
+    console.error(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+
 // API to add a new show to the database
 export const addShow = async (req, res) => {
   try {
@@ -32,15 +87,13 @@ export const addShow = async (req, res) => {
     let movie = await Movie.findById(movieId);
 
     if (!movie) {
-      const [movieDetailsResponse, movieCreditsResponse] = await Promise.all([
-        axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
-          headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
-        }),
+      const movieDetailsResponse = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}`, {
+        headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
+      });
 
-        axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {
-          headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
-        }),
-      ]);
+      const movieCreditsResponse = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits`, {
+        headers: { Authorization: `Bearer ${process.env.TMDB_API_KEY}` },
+      });
 
       const movieApiData = movieDetailsResponse.data;
       const movieCreditsData = movieCreditsResponse.data;
