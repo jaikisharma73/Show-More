@@ -3,14 +3,11 @@ import axios from 'axios';
 import BlurCircle from '../components/BlurCircle';
 import { StarIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
 const Releases = () => {
   const [upcomingMovies, setUpcomingMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
   const image_base_url = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
-
   useEffect(() => {
     const fetchUpcomingMovies = async () => {
       try {
@@ -24,10 +21,8 @@ const Releases = () => {
         setLoading(false);
       }
     };
-
     fetchUpcomingMovies();
   }, []);
-
   if (loading) {
     return (
       <div className='flex flex-col items-center justify-center h-[60vh]'>
@@ -35,14 +30,11 @@ const Releases = () => {
       </div>
     );
   }
-
   return (
     <div className='relative my-30 mb-60 px-6 md:px-16 lg:px-16 xl:px-18 overflow-hidden min-h-[80vh] pt-0'>
       <BlurCircle top="50px" left="0px" />
       <BlurCircle bottom="20px" right="10px" />
-
       <h1 className='text-3xl font-bold my-8 text-white'>Upcoming Releases</h1>
-
       <div className='grid grid-cols-2 sm:flex sm:flex-wrap sm:justify-center gap-4 sm:gap-8'>
         {upcomingMovies.length > 0 ? upcomingMovies.map((movie) => (
           <div
@@ -68,7 +60,6 @@ const Releases = () => {
             <p className='text-sm text-gray-400 mt-2'>
               {movie.release_date ? new Date(movie.release_date).toLocaleDateString() : "TBA"}
             </p>
-
             <div className='flex items-center justify-between mt-4 pb-3'>
               <button className='px-4 py-2 text-xs bg-gray-600 cursor-not-allowed rounded-full font-medium text-white'>
                 Coming Soon
@@ -90,5 +81,4 @@ const Releases = () => {
     </div>
   );
 };
-
 export default Releases;

@@ -23,11 +23,9 @@ import ListBookings from './pages/admin/ListBookings';
 import { useAppContext } from './context/appContext';
 import { SignIn } from '@clerk/clerk-react';
 import Loading from './components/Loading';
-
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith('/admin')
   const { user } = useAppContext() || {};
-
   return (
     <>
     <Toaster />
@@ -42,24 +40,18 @@ const App = () => {
       <Route path='/releases' element={<Releases/>} />
       <Route path='/releases/:id' element={<ReleaseDetails/>} />
       <Route path='/loading/:nextUrl' element={<Loading/>} />
-
-
       <Route path='/favorite' element={<Favorite/>} />
       <Route path='/about-us' element={<AboutUs/>} />
       <Route path='/contact-us' element={<ContactUs/>} />
       <Route path='/privacy-policy' element={<PrivacyPolicy/>} />
-
       <Route path='/admin/*' element={user ? <Layout/>:(<div className='min-h-screen flex justify-center items-center'><SignIn fallbackRedirectUrl={'/admin'}/></div>)}>
-
         <Route index element={<Dashboard/>}/>
         <Route path="add-shows" element={<AddShows/>}/>
         <Route path="list-shows" element={<ListShows/>}/>
         <Route path="list-bookings" element={<ListBookings/>}/>
       </Route>
-
     </Routes>
     {!isAdminRoute && <Footer />}
-    
     </>
   );
 }

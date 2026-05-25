@@ -1,5 +1,4 @@
 import React from 'react';
-
 const AboutUs = () => {
   return (
     <div className="min-h-screen pt-12 md:pt-24 px-6 md:px-16 lg:px-24 w-full text-gray-300">
@@ -20,5 +19,4 @@ const AboutUs = () => {
     </div>
   );
 };
-
 export default AboutUs;

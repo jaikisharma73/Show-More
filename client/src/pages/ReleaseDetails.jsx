@@ -5,15 +5,12 @@ import { PlayCircleIcon, StarIcon } from "lucide-react";
 import timeFormate from "../lib/timeFormate";
 import Loading from "../components/Loading";
 import { useAppContext } from "../context/appContext";
-
 const ReleaseDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const { axios, image_base_url } = useAppContext();
-
   const getMovieDetails = async () => {
     try {
       const { data } = await axios.get(`/api/show/tmdb/${id}`);
@@ -26,11 +23,9 @@ const ReleaseDetails = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     getMovieDetails();
   }, [id]);
-
   return loading ? (
     <Loading />
   ) : movie ? (
@@ -78,7 +73,6 @@ const ReleaseDetails = () => {
           </div>
         </div>
       </div>
-
       {movie.casts && movie.casts.length > 0 && (
         <>
           <p className="text-lg font-medium mt-20 text-white">Cast</p>
@@ -104,7 +98,6 @@ const ReleaseDetails = () => {
           </div>
         </>
       )}
-
       <div className="flex justify-center mt-20 mb-20">
         <button
           onClick={() => {
@@ -123,5 +116,4 @@ const ReleaseDetails = () => {
     </div>
   );
 };
-
 export default ReleaseDetails;

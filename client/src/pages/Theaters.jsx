@@ -1,6 +1,5 @@
 import React from 'react';
 import BlurCircle from '../components/BlurCircle';
-
 const Theaters = () => {
   const dummyTheaters = [
     { id: 1, name: "PVR Cinemas", location: "City Center Mall", screens: 5, format: "IMAX, 3D, 2D" },
@@ -9,14 +8,11 @@ const Theaters = () => {
     { id: 4, name: "Carnival Cinemas", location: "Rockline Mall", screens: 3, format: "2D, 3D" },
     { id: 5, name: "Gopalan Cinemas", location: "Innovation Mall", screens: 4, format: "2D, 3D" },
   ];
-
   return (
     <div className='relative my-30 mb-60 px-6 md:px-16 lg:px-16 xl:px-18 overflow-hidden min-h-[80vh] pt-0'>
       <BlurCircle top="50px" left="0px" />
       <BlurCircle bottom="20px" right="10px" />
-
       <h1 className='text-3xl font-bold my-8 text-center text-white'>Our Partner Theaters</h1>
-
       <div className='flex flex-col items-center gap-6 w-full max-w-4xl mx-auto'>
         {dummyTheaters.map((theater) => (
           <div key={theater.id} className='w-full bg-gray-800/60 backdrop-blur-md p-6 rounded-2xl border border-gray-700/50 hover:bg-gray-800 transition duration-300'>
@@ -39,5 +35,4 @@ const Theaters = () => {
     </div>
   );
 };
-
 export default Theaters;
