@@ -6,7 +6,7 @@ const AboutUs = () => {
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-8 border-b border-gray-700 pb-4">About Us</h1>
         <div className="space-y-6 text-lg">
           <p>
-            Welcome to JackMov, your premium destination for everything cinema! At JackMov, we believe that movies are more than just entertainment; they are experiences that connect us, inspire us, and allow us to explore countless worlds.
+            Welcome to JackMov., your premium destination for everything cinema! At JackMov, we believe that movies are more than just entertainment; they are experiences that connect us, inspire us, and allow us to explore countless worlds.
           </p>
           <p>
             Founded by passionate film enthusiasts, JackMov was built with a singular vision: to simplify the movie-going experience while providing users with comprehensive information, seamless booking, and unmatched convenience. Whether you are catching the latest blockbuster on opening night or discovering an indie gem, we're here to ensure your journey from screen to seat is flawless.
